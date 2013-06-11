@@ -30,7 +30,9 @@ public class RomanNumeralsTest {
             new Object[]{"XI", 11},
             new Object[]{"XV", 15},
             new Object[]{"IX", 9},
-            new Object[]{"IV", 4}
+            new Object[]{"IV", 4},
+            new Object[]{"XIV", 14},
+            new Object[]{"XCI", 91}
         );
     }
 
@@ -59,6 +61,7 @@ public class RomanNumeralsTest {
             lookup.put("I", 1);
             lookup.put("V", 5);
             lookup.put("X", 10);
+            lookup.put("C", 100);
         }
 
         public int toArabic() {
@@ -69,11 +72,12 @@ public class RomanNumeralsTest {
             String firstNumeral = numeral.substring(0, 1);
             int firstValue = toArabic(firstNumeral);
 
-            if (numeral.length() == 2) {
+            if (numeral.length() >= 2) {
                 String secondNumeral = numeral.substring(1, 2);
                 int secondValue = toArabic(secondNumeral);
                 if (secondValue > firstValue) {
-                    return secondValue - firstValue;
+                    String remainingNumerals = numeral.substring(2);
+                    return secondValue - firstValue + new Roman(remainingNumerals).toArabic();
                 }
             }
 
