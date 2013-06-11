@@ -28,7 +28,7 @@ public class RomanNumeralsTest {
             new Object[]{"VII", 7},
             new Object[]{"VIII", 8},
             new Object[]{"XI", 11},
-                new Object[]{"XV", 15}
+            new Object[]{"XV", 15}
         );
     }
 
@@ -64,8 +64,13 @@ public class RomanNumeralsTest {
                 return 0;
             }
 
-            int rest = new Roman(numeral.substring(1)).toArabic();
-            return lookup.get(numeral.substring(0, 1)) + rest;
+            String firstNumeral = numeral.substring(0, 1);
+            String remainingNumerals = numeral.substring(1);
+            return toArabic(firstNumeral) + new Roman(remainingNumerals).toArabic();
+        }
+
+        private int toArabic(String numeral) {
+            return lookup.get(numeral);
         }
     }
 }
