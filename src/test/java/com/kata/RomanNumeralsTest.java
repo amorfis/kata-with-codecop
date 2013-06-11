@@ -28,7 +28,9 @@ public class RomanNumeralsTest {
             new Object[]{"VII", 7},
             new Object[]{"VIII", 8},
             new Object[]{"XI", 11},
-            new Object[]{"XV", 15}
+            new Object[]{"XV", 15},
+            new Object[]{"IX", 9},
+            new Object[]{"IV", 4}
         );
     }
 
@@ -65,8 +67,18 @@ public class RomanNumeralsTest {
             }
 
             String firstNumeral = numeral.substring(0, 1);
+            int firstValue = toArabic(firstNumeral);
+
+            if (numeral.length() == 2) {
+                String secondNumeral = numeral.substring(1, 2);
+                int secondValue = toArabic(secondNumeral);
+                if (secondValue > firstValue) {
+                    return secondValue - firstValue;
+                }
+            }
+
             String remainingNumerals = numeral.substring(1);
-            return toArabic(firstNumeral) + new Roman(remainingNumerals).toArabic();
+            return firstValue + new Roman(remainingNumerals).toArabic();
         }
 
         private int toArabic(String numeral) {
