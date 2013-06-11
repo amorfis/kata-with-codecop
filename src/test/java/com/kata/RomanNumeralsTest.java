@@ -23,7 +23,12 @@ public class RomanNumeralsTest {
             new Object[]{"II", 2},
             new Object[]{"III", 3},
             new Object[]{"V", 5},
-            new Object[]{"X", 10}
+            new Object[]{"X", 10},
+            new Object[]{"VI", 6},
+            new Object[]{"VII", 7},
+            new Object[]{"VIII", 8},
+            new Object[]{"XI", 11},
+                new Object[]{"XV", 15}
         );
     }
 
@@ -55,17 +60,12 @@ public class RomanNumeralsTest {
         }
 
         public int toArabic() {
-            if (numeral.equalsIgnoreCase("I")) {
-                return lookup.get("I");
-            }
-            if (numeral.equalsIgnoreCase("V")) {
-                return lookup.get("V");
-            }
-            if (numeral.equalsIgnoreCase("X")) {
-                return lookup.get("X");
+            if (numeral.isEmpty()) {
+                return 0;
             }
 
-            return numeral.length();
+            int rest = new Roman(numeral.substring(1)).toArabic();
+            return lookup.get(numeral.substring(0, 1)) + rest;
         }
     }
 }
