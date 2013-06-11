@@ -53,15 +53,15 @@ public class RomanNumeralsTest {
     private static class Roman {
 
         private final String numeral;
-        private final Map<String, Integer> lookup;
+        private final Map<String, Integer> values;
 
         public Roman(String numeral) {
             this.numeral = numeral;
-            this.lookup = new HashMap<String, Integer>();
-            lookup.put("I", 1);
-            lookup.put("V", 5);
-            lookup.put("X", 10);
-            lookup.put("C", 100);
+            this.values = new HashMap<String, Integer>();
+            values.put("I", 1);
+            values.put("V", 5);
+            values.put("X", 10);
+            values.put("C", 100);
         }
 
         public int toArabic() {
@@ -69,24 +69,29 @@ public class RomanNumeralsTest {
                 return 0;
             }
 
-            String firstNumeral = numeral.substring(0, 1);
-            int firstValue = toArabic(firstNumeral);
-
-            if (numeral.length() >= 2) {
-                String secondNumeral = numeral.substring(1, 2);
-                int secondValue = toArabic(secondNumeral);
-                if (secondValue > firstValue) {
-                    String remainingNumerals = numeral.substring(2);
-                    return secondValue - firstValue + new Roman(remainingNumerals).toArabic();
-                }
+            if (numeral.length() == 1) {
+                return valueAt(0);
             }
 
-            String remainingNumerals = numeral.substring(1);
+            int firstValue = valueAt(0);
+            int secondValue = valueAt(1);
+            int nextIndex = 1;
+
+            if (secondValue > firstValue) {
+                nextIndex = 2;
+                firstValue = secondValue - firstValue;
+            }
+
+            String remainingNumerals = numeral.substring(nextIndex);
             return firstValue + new Roman(remainingNumerals).toArabic();
         }
 
-        private int toArabic(String numeral) {
-            return lookup.get(numeral);
+        private int valueAt(int index) {
+            return valueOf(numeral.substring(index, index+1));
+        }
+
+        private int valueOf(String singleNumeral) {
+            return values.get(singleNumeral);
         }
     }
 }
