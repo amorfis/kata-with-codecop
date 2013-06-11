@@ -75,15 +75,12 @@ public class RomanNumeralsTest {
 
             int firstValue = valueAt(0);
             int secondValue = valueAt(1);
-            int nextIndex = 1;
 
-            if (secondValue > firstValue) {
-                nextIndex = 2;
-                firstValue = secondValue - firstValue;
+            if (firstValue >= secondValue) {
+                return firstValue + toArabicAfter(1);
+            } else {
+                return secondValue - firstValue + toArabicAfter(2);
             }
-
-            String remainingNumerals = numeral.substring(nextIndex);
-            return firstValue + new Roman(remainingNumerals).toArabic();
         }
 
         private int valueAt(int index) {
@@ -92,6 +89,10 @@ public class RomanNumeralsTest {
 
         private int valueOf(String singleNumeral) {
             return values.get(singleNumeral);
+        }
+
+        private int toArabicAfter(int index) {
+            return new Roman(numeral.substring(index)).toArabic();
         }
     }
 }
